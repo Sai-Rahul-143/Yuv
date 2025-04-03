@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Puzzle</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        .grid { display: grid; gap: 5px; margin: 20px auto; }
+        .tile { width: 50px; height: 50px; font-size: 20px; background: lightblue; border: 2px solid #000; cursor: pointer; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Matrix Puzzle</h1>
+    <div id="gameBoard" class="grid"></div>
+    <button onclick="startGame(3)">3x3</button>
+    <button onclick="startGame(4)">4x4</button>
+
+    <script>
+        let gridSize = 3;
+        function startGame(size) {
+            gridSize = size;
+            const board = document.getElementById("gameBoard");
+            board.innerHTML = "";
+            board.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+            let tiles = [...Array(size * size).keys()];
+            tiles.sort(() => Math.random() - 0.5);
+            tiles.forEach(n => {
+                const div = document.createElement("div");
+                div.textContent = n ? n : "";
+                div.className = "tile";
+                div.onclick = () => moveTile(n, div);
+                board.appendChild(div);
+            });
+        }
+
+        function moveTile(num, tile) {
+            if (num === 0) return;
+            const emptyTile = [...document.querySelectorAll(".tile")].find(t => t.textContent === "");
+            [tile.textContent, emptyTile.textContent] = [emptyTile.textContent, tile.textContent];
+        }
+        startGame(3);
+    </script>
+</body>
+</html>
