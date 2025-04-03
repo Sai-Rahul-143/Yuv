@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Online Games</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            text-align: center;
+            color: white;
+        }
+        .header {
+            font-size: 24px;
+            padding: 20px;
+            background: #333;
+        }
+        .game-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            padding: 20px;
+        }
+        .game {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: black;
+            text-align: center;
+        }
+        .game img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .login-container {
+            margin: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            display: inline-block;
+        }
+        .leaderboard {
+            margin: 20px auto;
+            width: 80%;
+            background: white;
+            color: black;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid black;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Welcome to Free Online Games</div><div class="login-container">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Enter your name">
+    <button onclick="login()">Login</button>
+</div>
+
+<div class="game-container" id="gameSection" style="display:none;">
+    <div class="game" onclick="playGame('snake.html')">
+        <img src="snake.png" alt="Snake Game">
+        <p>Snake Game</p>
+    </div>
+    <div class="game" onclick="playGame('puzzle.html')">
+        <img src="puzzle.png" alt="Puzzle Game">
+        <p>Matrix Puzzle</p>
+    </div>
+    <div class="game" onclick="playGame('flappy.html')">
+        <img src="flappy.png" alt="Flappy Bird">
+        <p>Flappy Bird</p>
+    </div>
+</div>
+
+<div class="leaderboard" id="leaderboardSection" style="display:none;">
+    <h2>Leaderboard</h2>
+    <table>
+        <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Score</th>
+        </tr>
+        <tbody id="leaderboardTable">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function login() {
+        const username = document.getElementById("username").value;
+        if (username) {
+            localStorage.setItem("playerName", username);
+            document.querySelector(".login-container").style.display = "none";
+            document.getElementById("gameSection").style.display = "grid";
+            document.getElementById("leaderboardSection").style.display = "block";
+        }
+    }
+    
+    function playGame(url) {
+        window.location.href = url;
+    }
+    
+    function updateLeaderboard(name, score) {
+        const table = document.getElementById("leaderboardTable");
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${table.rows.length + 1}</td><td>${name}</td><td>${score}</td>`;
+        table.appendChild(row);
+    }
+</script>
+
+</body>
+</html>
